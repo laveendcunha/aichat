@@ -1,0 +1,273 @@
+[
+  {
+    "intent": "helmet",
+    "examples": [
+      "Should I wear a helmet?",
+      "Do I need to wear a helmet?",
+      "Is helmet necessary while riding a bike?",
+      "I am riding without a helmet",
+      "Why is wearing a helmet important?",
+      "Can I ride a two-wheeler without a helmet?",
+      "What is the penalty for not wearing a helmet?",
+      "Is helmet compulsory for pillion riders?"
+    ],
+    "keywords": [
+      "helmet",
+      "head protection",
+      "bike helmet",
+      "pillion helmet",
+      "two wheeler helmet",
+      "riding helmet",
+      "headgear"
+    ],
+    "response": "Always wear a properly fitted, ISI/DOT-certified helmet while riding a two-wheeler. Wearing a helmet reduces the risk of severe head injury by over 70% and is mandatory by law for both riders and pillion passengers.",
+    "reasoning": {
+      "pratyaksha": "Observation of two-wheeler operations without or inquiring about mandatory head protection.",
+      "hetu": "Kinetic impact during a collision transfers massive deceleration forces directly to the human skull.",
+      "anumana": "Using a certified helmet absorbs impact energy and prevents fatal traumatic brain injuries.",
+      "nigamana": "Fasten a certified helmet securely before starting any two-wheeler ride."
+    }
+  },
+  {
+    "intent": "seatbelt",
+    "examples": [
+      "Should I wear a seat belt while driving?",
+      "Do I need to wear a seatbelt?",
+      "Is seatbelt mandatory for rear passengers?",
+      "Why should I wear a seatbelt?",
+      "What happens if I don't wear a seatbelt?",
+      "Is seat belt necessary for short distances?"
+    ],
+    "keywords": [
+      "seatbelt",
+      "seat belt",
+      "safety belt",
+      "buckle up",
+      "car belt"
+    ],
+    "response": "Always wear a seatbelt while traveling in a car, whether sitting in the front or rear seats. Seatbelts restrain occupants during sudden braking or collisions, preventing severe impact with the vehicle interior or ejection.",
+    "reasoning": {
+      "pratyaksha": "Vehicle occupancy during transit requires continuous physical restraint.",
+      "hetu": "Inertia causes unrestrained passengers to launch forward at vehicle speed during rapid deceleration.",
+      "anumana": "Three-point seatbelts distribute deceleration forces across rigid skeletal structures (chest and pelvis).",
+      "nigamana": "Ensure all occupants buckle up before the vehicle moves."
+    }
+  },
+  {
+    "intent": "mobile_phone",
+    "examples": [
+      "Can I use my phone while driving?",
+      "Is it illegal to talk on phone while riding?",
+      "Can I use hands-free mobile while driving?",
+      "Should I check maps on my phone while driving?",
+      "Is texting while driving dangerous?",
+      "Can I make a quick phone call at a red light?"
+    ],
+    "keywords": [
+      "mobile phone",
+      "phone",
+      "cellphone",
+      "texting",
+      "calling while driving",
+      "hands-free",
+      "smartphone"
+    ],
+    "response": "Using a mobile phone while driving or riding—including texting, calling, or browsing maps without a secure vehicle mount—is extremely dangerous and illegal. Stop in a safe place before using your phone.",
+    "reasoning": {
+      "pratyaksha": "Driver engaging with a handheld mobile device while navigating traffic.",
+      "hetu": "Mobile interaction introduces visual, manual, and cognitive distractions simultaneously.",
+      "anumana": "Distracted driving delays reaction times by up to 50%, making collisions imminent.",
+      "nigamana": "Pull over safely to the curb before touching or responding to any mobile notification."
+    }
+  },
+  {
+    "intent": "drunk_driving",
+    "examples": [
+      "I have been drinking. Can I drive home?",
+      "Can I drive after drinking alcohol?",
+      "Is a small amount of alcohol safe for driving?",
+      "What is the legal limit for alcohol while driving?",
+      "Can I ride my bike after having beer?",
+      "What happens if caught drunk driving?",
+      "I have consumed alcohol. Can I drive?"
+    ],
+    "keywords": [
+      "drunk driving",
+      "drinking",
+      "alcohol",
+      "liquor",
+      "beer",
+      "breathalyzer",
+      "drunk",
+      "inebriated",
+      "drink and drive"
+    ],
+    "response": "Never drive or ride under the influence of alcohol or drugs. Alcohol severely impairs coordination, reaction time, and decision-making. If you have consumed alcohol, take a cab, call a designated driver, or use public transport.",
+    "reasoning": {
+      "pratyaksha": "Ingestion of alcoholic beverages prior to vehicular operation.",
+      "hetu": "Ethanol depresses central nervous system functions, severely impairing reflexes and spatial judgement.",
+      "anumana": "Operating heavy machinery under impairment directly leads to fatal road accidents.",
+      "nigamana": "Strictly refrain from driving; secure an alternative ride via cab, designated driver, or public transit."
+    }
+  },
+  {
+    "intent": "speeding",
+    "examples": [
+      "What happens if I exceed the speed limit?",
+      "Is speeding dangerous on highways?",
+      "Why should I adhere to speed limits?",
+      "Can I drive fast if the road is empty?",
+      "What are the dangers of over-speeding?"
+    ],
+    "keywords": [
+      "speeding",
+      "speed limit",
+      "fast driving",
+      "overspeeding",
+      "over speeding",
+      "high speed",
+      "speed governor"
+    ],
+    "response": "Excessive speed reduces your reaction time, increases braking distance exponentially, and severely worsens collision severity. Always follow posted speed limits and adjust your speed based on road, weather, and traffic conditions.",
+    "reasoning": {
+      "pratyaksha": "Vehicle traveling at velocities exceeding regulatory speed limits.",
+      "hetu": "Kinetic energy increases with the square of velocity ($E_k = \\frac{1}{2}mv^2$), drastically magnifying braking distance.",
+      "anumana": "Excessive speed eliminates emergency margin of error, making crashes exponentially more severe.",
+      "nigamana": "Adhere strictly to designated speed limits and reduce speed during dense traffic or poor weather."
+    }
+  },
+  {
+    "intent": "traffic_signal",
+    "examples": [
+      "Can I cross a yellow signal?",
+      "What should I do at a red light?",
+      "Is jumping a red light illegal?",
+      "What do traffic light colors mean?",
+      "Can I turn left on a red signal?"
+    ],
+    "keywords": [
+      "traffic signal",
+      "red light",
+      "yellow light",
+      "green light",
+      "traffic lights",
+      "signal jumping",
+      "junction signal"
+    ],
+    "response": "Obey traffic signals at all times: Red means STOP completely before the stop line, Amber/Yellow means PREPARE TO STOP unless unsafe to do so, and Green means PROCEED with caution if the intersection is clear.",
+    "reasoning": {
+      "pratyaksha": "Approaching a regulated traffic intersection controlled by illuminated signals.",
+      "hetu": "Intersections are high-conflict zones where crossing vehicle paths intersect.",
+      "anumana": "Violating red or amber signals results in high-speed side-impact (T-bone) collisions.",
+      "nigamana": "Halt completely behind the stop line on red and amber signals."
+    }
+  },
+  {
+    "intent": "zebra_crossing",
+    "examples": [
+      "Who has priority at a zebra crossing?",
+      "Should drivers stop for pedestrians at zebra crossing?",
+      "How to use a zebra crossing safely?",
+      "Can I park on a zebra crossing?",
+      "What is a pedestrian crossing rule?"
+    ],
+    "keywords": [
+      "zebra crossing",
+      "pedestrian crossing",
+      "crosswalk",
+      "pedestrian",
+      "walking lane",
+      "footpath crossing"
+    ],
+    "response": "Pedestrians have right of way at zebra crossings. Motorists must slow down and stop to allow pedestrians to cross safely. Pedestrians should look both ways before stepping onto the road.",
+    "reasoning": {
+      "pratyaksha": "Pedestrians attempting to cross the roadway at marked white stripes (zebra lines).",
+      "hetu": "Unprotected pedestrians lack physical armor against motor vehicle impacts.",
+      "anumana": "Yielding right-of-way prevents fatal vehicle-pedestrian strikes.",
+      "nigamana": "Decelerate and bring your vehicle to a complete stop before the crosswalk line."
+    }
+  },
+  {
+    "intent": "overtaking",
+    "examples": [
+      "From which side should I overtake a vehicle?",
+      "Can I overtake on a curve or blind bend?",
+      "What are safe overtaking rules?",
+      "Is overtaking on the left allowed?",
+      "When is overtaking prohibited?"
+    ],
+    "keywords": [
+      "overtaking",
+      "overtake",
+      "passing vehicle",
+      "blind spot",
+      "blind curve",
+      "lane change"
+    ],
+    "response": "Always overtake from the right side after checking mirrors and signaling your intention. Never overtake on blind curves, bridges, narrow roads, or pedestrian crossings.",
+    "reasoning": {
+      "pratyaksha": "Passing a slower vehicle on a multi-lane or two-way road.",
+      "hetu": "Overtaking requires occupying adjacent or oncoming traffic lanes with limited sight lines.",
+      "anumana": "Overtaking on blind curves or from the left leads to head-on collisions or blind-spot side-swipes.",
+      "nigamana": "Signal early, verify clear sight lines ahead, and overtake strictly from the right."
+    }
+  },
+  {
+    "intent": "driving_in_rain",
+    "examples": [
+      "How to drive safely during heavy rain?",
+      "What precautions to take while driving in monsoon?",
+      "Should I use hazard lights while driving in heavy rain?",
+      "How to avoid hydroplaning in rain?",
+      "What should I do if it is raining?"
+    ],
+    "keywords": [
+      "driving in rain",
+      "rain",
+      "monsoon",
+      "wet roads",
+      "hydroplaning",
+      "aquaplaning",
+      "slippery road",
+      "fog lights",
+      "hazard lights"
+    ],
+    "response": "During rain, reduce your speed by 20-30%, increase follow distance to 4+ seconds, and turn on low-beam headlights for visibility. Avoid sudden braking or sharp steering to prevent hydroplaning.",
+    "reasoning": {
+      "pratyaksha": "Precipitation accumulating water layer on asphalt road surface.",
+      "hetu": "Water reduces tire-pavement friction coefficient, causing aquaplaning and extended braking distances.",
+      "anumana": "High speeds on wet roads cause complete loss of steering control.",
+      "nigamana": "Reduce speed, engage low-beam headlights, and double your braking gap."
+    }
+  },
+  {
+    "intent": "accident_emergency",
+    "examples": [
+      "What should I do if I witness a road accident?",
+      "Who to call during a road emergency in India?",
+      "What is Good Samaritan law?",
+      "How to help an injured person on the road?",
+      "There has been an accident",
+      "What should I do after an accident?"
+    ],
+    "keywords": [
+      "accident",
+      "emergency",
+      "crash",
+      "helpline",
+      "112",
+      "108",
+      "ambulance",
+      "injured",
+      "good samaritan",
+      "first aid"
+    ],
+    "response": "In a road emergency: 1. Ensure your own safety first and move away from danger. 2. Call emergency helpline 112 or 108 immediately. 3. Warn oncoming traffic with hazard lights or warning triangles. 4. Provide basic first aid if trained. Under the Good Samaritan Law, helpers are protected from legal harassment.",
+    "reasoning": {
+      "pratyaksha": "Occurrence of a vehicular crash involving potential injuries or secondary hazards.",
+      "hetu": "Unsecured crash scenes risk secondary pile-ups and delayed trauma medical care.",
+      "anumana": "Immediate scene marking and rapid emergency dispatch saves lives during the golden hour.",
+      "nigamana": "Ensure personal safety, dial 112/108 immediately, and deploy hazard warnings for traffic."
+    }
+  }
+]

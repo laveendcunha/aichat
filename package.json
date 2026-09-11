@@ -1,0 +1,16 @@
+{
+  "name": "road-safety-bot-workspace",
+  "version": "1.0.0",
+  "description": "Road Safety Bot Fullstack Workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently -k -n \"SERVER,CLIENT\" -c \"yellow.bold,cyan.bold\" \"npm run dev:server\" \"npm run dev:client\"",
+    "install:all": "npm --prefix server install && npm --prefix client install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
