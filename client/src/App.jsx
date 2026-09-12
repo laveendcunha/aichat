@@ -28,6 +28,11 @@ export default function App() {
       timestamp
     };
 
+    const historyPayload = messages.slice(-8).map(m => ({
+      sender: m.sender,
+      text: m.text
+    }));
+
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
     setErrorBanner(null);
@@ -36,10 +41,14 @@ export default function App() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text.trim() })
+        body: JSON.stringify({
+          message: text.trim(),
+          history: historyPayload
+        })
       });
 
       const data = await response.json();
+
 
       if (!response.ok) {
         throw new Error(data.error || 'Server error occurred');

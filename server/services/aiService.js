@@ -1,26 +1,39 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const SYSTEM_PROMPT = `You are Road Safety Bot, an AI safety assistant created for an Indian Knowledge Systems (IKS) academic experiment.
+const SYSTEM_PROMPT = `You are Road Safety Bot, a knowledgeable and responsible road-safety assistant.
 
-STRICT SAFETY MANDATES:
-1. Drunk Driving: Strictly forbid driving under the influence of alcohol or drugs under any circumstances.
-2. Speeding & Racing: Strongly discourage excessive speed or racing on public roads. Never provide racing or high-speed bypass advice.
-3. Phone Use: Instruct drivers to stop in a safe shoulder/parking space before operating any mobile device.
-4. Traffic Signals: Never encourage running red lights or jumping amber signals.
-5. Emergencies: Prioritize 1) Immediate personal safety, 2) Moving out of active traffic, 3) Calling emergency services (112 / 108 in India), and 4) Avoiding unnecessary secondary risk.
+Your primary purpose is to answer the user's actual question clearly, accurately, and practically.
+Understand the complete context of the user's message before answering.
+Do not give generic road-safety advice when the user has asked a specific question.
+Answer the question directly first, then provide relevant explanation or recommended actions.
 
-STRUCTURED IKS REASONING MANDATE:
-You MUST structure your reasoning strictly into the 4-fold Nyaya Pramana framework:
-- Pratyaksha (Observation): Direct physical observation of the user's scenario.
-- Hetu (Evidence / Reason): Causal physics, law, or physiological reason.
-- Anumana (Inference): Logical deduction of safety risks and consequences.
-- Nigamana (Conclusion): Direct, unambiguous safety action or instruction.
+Your advice must prioritize safety and should be appropriate for real-world road situations.
+Never encourage:
+- drunk driving
+- reckless driving
+- racing on public roads
+- dangerous overtaking
+- extreme speeding
+- running red lights
+- using a phone while driving
+- driving a vehicle that is unsafe to operate
 
-Format your response clearly as:
-Pratyaksha: [Observation]
-Hetu: [Evidence/Reason]
-Anumana: [Inference]
-Nigamana: [Conclusion]`;
+If the user describes an emergency, prioritize immediate safety.
+If appropriate, advise the user to move to a safe location and contact the relevant emergency services (112 or 108 in India). Do not pretend to be an emergency service.
+
+Use Indian road-safety context when relevant (e.g. traffic rules, two-wheelers, pedestrians, Indian road situations).
+Do not invent laws, penalties, or emergency numbers when you are uncertain.
+If a question is ambiguous, ask a concise clarification rather than confidently assuming the situation.
+
+Do not provide unnecessary information. Keep normal answers concise but complete (approx 2 to 5 short paragraphs or bullet points).
+
+When the situation is suitable for logical explanation, structure the reasoning using Indian Knowledge Systems (IKS) Nyaya Pramana:
+Pratyaksha — Observation
+Hetu — Evidence/Reason
+Anumana — Inference
+Nigamana — Conclusion
+
+Use the IKS reasoning structure naturally rather than forcing it into every trivial or simple answer.`;
 
 /**
  * Parses IKS 4-fold sections from generated text into a structured reasoning object
@@ -60,22 +73,65 @@ function parseIKSReasoning(text) {
   return reasoning;
 }
 
-export async function getAIResponse(userMessage) {
-  const apiKey = process.env.AI_API_KEY;
+/**
+ * Sanitizes and prepares history for GoogleGenerativeAI chat
+ */
+function prepareGeminiHistory(rawHistory) {
+  if (!Array.isArray(rawHistory)) return [];
+  const formatted = [];
+  
+  const recent = rawHistory.slice(-8);
+  for (const msg of recent) {
+    const isUser = msg.sender === 'user' || msg.role === 'user';
+    const text = (msg.text || msg.response || '').trim();
+    if (!text) continue;
+    
+    const role = isUser ? 'user' : 'model';
+    if (formatted.length > 0 && formatted[formatted.length - 1].role === role) {
+      formatted[formatted.length - 1].parts[0].text += `\n${text}`;
+    } else {
+      formatted.push({ role, parts: [{ text }] });
+    }
+  }
+
+  while (formatted.length > 0 && formatted[0].role !== 'user') {
+    formatted.shift();
+  }
+
+  return formatted;
+}
+
+export async function getAIResponse(userMessage, rawHistory = []) {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.AI_API_KEY;
 
   if (!apiKey || apiKey === 'your_secret_key_here' || apiKey.trim() === '') {
-    return generateOfflineIKSResponse(userMessage);
+    return {
+      source: "ai_error",
+      response: "I'm unable to access AI safety guidance right now. Please follow basic road-safety precautions and try again.",
+      reasoning: null
+    };
   }
 
   try {
+    const modelName = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: modelName,
       systemInstruction: SYSTEM_PROMPT
     });
 
-    const result = await model.generateContent(userMessage);
-    const responseText = result.response.text();
+    const formattedHistory = prepareGeminiHistory(rawHistory);
+
+    let responseText = '';
+    if (formattedHistory.length > 0) {
+      const chat = model.startChat({ history: formattedHistory });
+      const result = await chat.sendMessage(userMessage);
+      responseText = result.response.text();
+    } else {
+      const result = await model.generateContent(userMessage);
+      responseText = result.response.text();
+    }
+
     const structuredReasoning = parseIKSReasoning(responseText);
 
     return {
@@ -84,47 +140,12 @@ export async function getAIResponse(userMessage) {
       reasoning: structuredReasoning
     };
   } catch (error) {
-    console.error('Error calling Gemini AI API:', error.message);
-    return generateOfflineIKSResponse(userMessage, error.message);
+    console.error('Error calling Gemini AI API:', error.message || error);
+    return {
+      source: "ai_error",
+      response: "I'm unable to access AI safety guidance right now. Please follow basic road-safety precautions and try again.",
+      reasoning: null
+    };
   }
 }
 
-function generateOfflineIKSResponse(userMessage, errDetail = null) {
-  const lowerMsg = userMessage.toLowerCase();
-
-  let pratyaksha = `Observation of user query: "${userMessage.trim()}".`;
-  let hetu = "Vehicle dynamics, road friction, and legal mandates dictate road user safety.";
-  let anumana = "Deviating from defensive driving protocols exponentially increases collision risks.";
-  let nigamana = "Always prioritize defensive driving, observe posted speed limits, and keep emergency contact numbers (112) accessible.";
-
-  if (lowerMsg.includes('headlight') || lowerMsg.includes('light') || lowerMsg.includes('night')) {
-    pratyaksha = "Vehicle headlight failure occurring during night riding/driving.";
-    hetu = "Absence of illumination drastically reduces forward sight lines and renders the vehicle invisible to oncoming traffic.";
-    anumana = "Continuing to ride in darkness creates extreme risk of collision with unlit obstacles or vehicles.";
-    nigamana = "Immediately pull off to a safe shoulder, turn on parking/hazard lights, and seek assistance or await daybreak.";
-  } else if (lowerMsg.includes('accident') || lowerMsg.includes('crash')) {
-    pratyaksha = "Occurrence or involvement in a vehicular road crash.";
-    hetu = "Unsecured crash scenes risk secondary multi-vehicle collisions and delayed medical intervention.";
-    anumana = "Immediate scene marking and emergency service activation prevents further fatalities during the golden hour.";
-    nigamana = "Move away from active traffic lanes, call emergency services (112 or 108) immediately, and deploy warning triangles.";
-  } else if (lowerMsg.includes('racing') || lowerMsg.includes('speed')) {
-    pratyaksha = "Inquiry regarding high-speed maneuvers or public road racing.";
-    hetu = "Kinetic energy increases with velocity squared ($E_k = \\frac{1}{2}mv^2$), rendering emergency braking ineffective.";
-    anumana = "Public road racing results in fatal collisions, vehicle destruction, and criminal prosecution.";
-    nigamana = "Never engage in street racing. Obey designated speed limits at all times.";
-  }
-
-  const formattedResponse = `Pratyaksha (Observation): ${pratyaksha}\n\nHetu (Evidence / Reason): ${hetu}\n\nAnumana (Inference): ${anumana}\n\nNigamana (Conclusion): ${nigamana}`;
-
-  return {
-    source: "ai",
-    response: formattedResponse,
-    reasoning: {
-      pratyaksha,
-      hetu,
-      anumana,
-      nigamana
-    },
-    isOfflineNotice: errDetail ? `AI fallback running in offline mode (${errDetail}).` : null
-  };
-}

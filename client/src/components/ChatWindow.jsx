@@ -47,7 +47,7 @@ export default function ChatWindow({ messages, isLoading, onSelectPrompt, onSele
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '150ms' }}></span>
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '300ms' }}></span>
             </div>
-            <span className="font-medium text-slate-300">Evaluating safety protocols...</span>
+            <span className="font-medium text-slate-300">Thinking about your safety...</span>
           </div>
         </div>
       )}

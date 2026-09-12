@@ -14,7 +14,7 @@ const router = express.Router();
  */
 router.post('/chat', async (req, res) => {
   try {
-    const { message, decisionFlowId, optionId } = req.body;
+    const { message, decisionFlowId, optionId, history } = req.body;
 
     // Handle Decision Option Selection
     if (decisionFlowId && optionId) {
@@ -61,7 +61,7 @@ router.post('/chat', async (req, res) => {
     }
 
     // 2. If NO local match found -> Execute AI Fallback Service
-    const aiResult = await getAIResponse(trimmedMessage);
+    const aiResult = await getAIResponse(trimmedMessage, history);
 
     return res.json({
       source: aiResult.source,

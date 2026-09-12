@@ -32,6 +32,7 @@ export default function InputBox({ onSendMessage, isLoading }) {
           <VoiceButton
             onTranscript={handleVoiceTranscript}
             disabled={isLoading}
+            initialText={input}
           />
 
           {/* Textarea Input */}
@@ -43,6 +44,7 @@ export default function InputBox({ onSendMessage, isLoading }) {
               onKeyDown={handleKeyDown}
               disabled={isLoading}
               id="chat-text-input"
+              aria-label="Type your road safety question"
               placeholder="Type your road safety question..."
               className="w-full px-4 py-3 bg-slate-900/90 text-slate-100 placeholder-slate-500 rounded-xl border border-slate-700/80 focus:outline-none focus:border-amber-500/80 focus:ring-2 focus:ring-amber-500/20 text-sm transition-all shadow-inner disabled:opacity-50"
             />
@@ -53,6 +55,7 @@ export default function InputBox({ onSendMessage, isLoading }) {
             type="submit"
             disabled={!input.trim() || isLoading}
             id="chat-send-button"
+            aria-label="Send Message"
             className={`p-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center cursor-pointer ${
               input.trim() && !isLoading
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:from-amber-400 hover:to-orange-400 shadow-md shadow-amber-500/20 active:scale-95'
@@ -60,6 +63,7 @@ export default function InputBox({ onSendMessage, isLoading }) {
             }`}
             title="Send Message"
           >
+
             {isLoading ? (
               <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
             ) : (

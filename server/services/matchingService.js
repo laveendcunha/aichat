@@ -168,7 +168,7 @@ export function matchQuery(userMessage) {
     }
   }
 
-  const SCORE_THRESHOLD = 0.35;
+  const SCORE_THRESHOLD = 0.55;
   if (highestScore >= SCORE_THRESHOLD && bestMatch) {
     return bestMatch;
   }
